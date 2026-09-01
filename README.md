@@ -20,6 +20,7 @@ The deployment build uses a strict allowlist. Only these files can enter the Git
 - `robots.txt`
 - `.nojekyll`
 - `og.png`, when present
+- self-hosted Noto Sans Lao font assets under `fonts/`
 
 Run `npm run verify` to check the boundary and `npm run build` to create the public `dist/` artifact.
 
