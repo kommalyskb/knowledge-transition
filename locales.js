@@ -184,7 +184,7 @@ window.KT_I18N = {
     "B2B SaaS subscription with governed usage tiers, beginning with a founder-led pilot. Pricing and willingness-to-pay remain validation work—not a completed market claim.": "B2B SaaS ແບບສະໝັກໃຊ້ ພ້ອມລະດັບການນຳໃຊ້ທີ່ມີການກຳກັບ, ເລີ່ມຈາກ Pilot ນຳໂດຍ Founder. ລາຄາ ແລະຄວາມຍິນດີຈ່າຍຍັງຕ້ອງທົດສອບ—ບໍ່ແມ່ນຂໍ້ອ້າງທາງຕະຫຼາດທີ່ຢືນຢັນແລ້ວ.",
     "06 · Evidence-led roadmap": "06 · ແຜນການທີ່ນຳດ້ວຍຫຼັກຖານ",
     "Build the trust foundation.": "ສ້າງພື້ນຖານຄວາມໄວ້ວາງໃຈ.",
-    "Then earn the pilot.": "ແລ້ວພິສູດຕົນເອງເພື່ອເຂົ້າສູ່ Pilot.",
+    "Then earn the pilot.": "ແລ້ວພິສູດຄວາມພ້ອມເພື່ອເຂົ້າສູ່ໄລຍະທົດລອງກັບຜູ້ໃຊ້ຈິງ.",
     "Now": "ຕອນນີ້",
     "Secure foundation": "ພື້ນຖານຄວາມປອດໄພ",
     "Tenant provisioning and role-based access in isolated experimental development.": "ສ້າງ Tenant ແລະການເຂົ້າເຖິງຕາມບົດບາດ ໃນສະພາບແວດລ້ອມພັດທະນາທົດລອງທີ່ແຍກອອກ.",
