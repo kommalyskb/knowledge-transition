@@ -10,7 +10,8 @@ if (verify.status !== 0) process.exit(verify.status || 1);
 
 fs.rmSync(dist, { recursive: true, force: true });
 fs.mkdirSync(dist, { recursive: true });
-const publishAllowlist = ['index.html', 'pitch.html', 'styles.css', 'pitch.css', 'locales.js', 'script.js', '404.html', 'robots.txt', '.nojekyll', 'og.png', 'fonts/noto-sans-lao-lao.woff2', 'fonts/noto-sans-lao-latin.woff2', 'product-ui/home-work.png', 'product-ui/knowledge-ingestion.png', 'product-ui/approval-decision.png', 'product-ui/grounded-answer.png', 'product-ui/transition-command.png', 'product-ui/executive-continuity.png'];
+const prototypeAssets = ['home-work', 'knowledge-ingestion', 'approval-decision', 'grounded-answer', 'transition-command', 'executive-continuity'].flatMap((name) => [`product-ui/${name}.png`, `product-ui/${name}-lo.png`, `product-ui/${name}-th.png`]);
+const publishAllowlist = ['index.html', 'pitch.html', 'styles.css', 'pitch.css', 'locales.js', 'script.js', '404.html', 'robots.txt', '.nojekyll', 'og.png', 'fonts/noto-sans-lao-lao.woff2', 'fonts/noto-sans-lao-latin.woff2', ...prototypeAssets];
 for (const file of publishAllowlist) {
   const source = path.join(root, file);
   if (!fs.existsSync(source)) {

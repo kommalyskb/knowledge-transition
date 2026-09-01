@@ -40,7 +40,8 @@ for (const required of ['index.html', 'pitch.html', 'styles.css', 'pitch.css', '
 for (const font of ['fonts/noto-sans-lao-lao.woff2', 'fonts/noto-sans-lao-latin.woff2']) {
   if (!fs.existsSync(path.join(root, font))) errors.push(`Missing required Lao font asset: ${font}`);
 }
-for (const asset of ['home-work.png', 'knowledge-ingestion.png', 'approval-decision.png', 'grounded-answer.png', 'transition-command.png', 'executive-continuity.png']) {
+const prototypeAssets = ['home-work', 'knowledge-ingestion', 'approval-decision', 'grounded-answer', 'transition-command', 'executive-continuity'].flatMap((name) => [`${name}.png`, `${name}-lo.png`, `${name}-th.png`]);
+for (const asset of prototypeAssets) {
   if (!fs.existsSync(path.join(root, 'product-ui', asset))) errors.push(`Missing required public prototype asset: product-ui/${asset}`);
 }
 

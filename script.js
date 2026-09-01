@@ -80,6 +80,10 @@ function applyLocale(locale, persist = true) {
     const key = originalAlt.get(element);
     element.setAttribute('alt', dictionary[key] || key);
   });
+  document.querySelectorAll('[data-localized-ui]').forEach((image) => {
+    const localizedSource = image.dataset[`src${locale.charAt(0).toUpperCase()}${locale.slice(1)}`];
+    if (localizedSource) image.src = localizedSource;
+  });
 
   document.documentElement.lang = locale;
   document.querySelectorAll('[data-locale]').forEach((button) => {
@@ -197,4 +201,50 @@ if (uiGallery) {
 
   lightbox?.querySelector('[data-ui-close]')?.addEventListener('click', () => lightbox.close());
   lightbox?.addEventListener('click', (event) => { if (event.target === lightbox) lightbox.close(); });
+}
+
+function setupAccessibleTabs(rootSelector, tabSelector, panelSelector, targetKey) {
+  const root = document.querySelector(rootSelector);
+  if (!root) return;
+  const tabs = [...root.querySelectorAll(tabSelector)];
+  const panels = [...root.querySelectorAll(panelSelector)];
+  const activate = (tab, moveFocus = false) => {
+    tabs.forEach((item) => {
+      const active = item === tab;
+      item.setAttribute('aria-selected', String(active));
+      item.tabIndex = active ? 0 : -1;
+    });
+    panels.forEach((panel) => { panel.hidden = panel.id !== tab.dataset[targetKey]; });
+    if (moveFocus) tab.focus();
+  };
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => activate(tab));
+    tab.addEventListener('keydown', (event) => {
+      if (!['ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      let next = index;
+      if (['ArrowDown', 'ArrowRight'].includes(event.key)) next = (index + 1) % tabs.length;
+      if (['ArrowUp', 'ArrowLeft'].includes(event.key)) next = (index - 1 + tabs.length) % tabs.length;
+      if (event.key === 'Home') next = 0;
+      if (event.key === 'End') next = tabs.length - 1;
+      activate(tabs[next], true);
+    });
+  });
+}
+
+setupAccessibleTabs('[data-story]', '[data-story-target]', '.story-panel', 'storyTarget');
+
+const chapterLinks = [...document.querySelectorAll('.chapter-rail a[href^="#"]')];
+const chapterSections = chapterLinks.map((link) => document.querySelector(link.getAttribute('href'))).filter(Boolean);
+if (chapterLinks.length && chapterSections.length) {
+  const chapterObserver = new IntersectionObserver((entries) => {
+    const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (!visible) return;
+    chapterLinks.forEach((link) => {
+      const active = link.getAttribute('href') === `#${visible.target.id}`;
+      link.classList.toggle('active', active);
+      if (active) link.setAttribute('aria-current', 'location'); else link.removeAttribute('aria-current');
+    });
+  }, { rootMargin: '-20% 0px -65% 0px', threshold: [0, 0.1, 0.3] });
+  chapterSections.forEach((section) => chapterObserver.observe(section));
 }

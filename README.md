@@ -16,7 +16,7 @@ The deployment build uses a strict allowlist. Only these files can enter the Git
 - `pitch.html`
 - `styles.css`
 - `pitch.css`
-- six curated, fictional-data prototype screenshots under `product-ui/`
+- six curated, fictional-data prototype views in English, Lao and Thai under `product-ui/`
 - `locales.js`
 - `script.js`
 - `404.html`
