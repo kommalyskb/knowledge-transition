@@ -1,0 +1,11 @@
+dist/
+.DS_Store
+node_modules/
+*.log
+
+# This repository is public-only. Never copy the private project tree here.
+docs/
+papers/
+private/
+evidence/
+attachments/
