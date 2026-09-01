@@ -10,7 +10,7 @@ if (verify.status !== 0) process.exit(verify.status || 1);
 
 fs.rmSync(dist, { recursive: true, force: true });
 fs.mkdirSync(dist, { recursive: true });
-const publishAllowlist = ['index.html', 'styles.css', 'locales.js', 'script.js', '404.html', 'robots.txt', '.nojekyll', 'og.png', 'fonts/noto-sans-lao-lao.woff2', 'fonts/noto-sans-lao-latin.woff2'];
+const publishAllowlist = ['index.html', 'pitch.html', 'styles.css', 'pitch.css', 'locales.js', 'script.js', '404.html', 'robots.txt', '.nojekyll', 'og.png', 'fonts/noto-sans-lao-lao.woff2', 'fonts/noto-sans-lao-latin.woff2'];
 for (const file of publishAllowlist) {
   const source = path.join(root, file);
   if (!fs.existsSync(source)) {

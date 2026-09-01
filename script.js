@@ -34,13 +34,18 @@ let activeLocale = initialLocale();
 
 function setMeta(locale) {
   const meta = i18n.meta?.[locale] || i18n.meta?.en || {};
-  document.title = meta.title || 'Knowledge Transition · Telbiz';
+  const pitchPage = document.body.dataset.page === 'pitch';
+  const title = pitchPage ? meta.pitchTitle : meta.title;
+  const description = pitchPage ? meta.pitchDescription : meta.description;
+  const ogTitle = pitchPage ? meta.pitchOgTitle : meta.ogTitle;
+  const ogDescription = pitchPage ? meta.pitchOgDescription : meta.ogDescription;
+  document.title = title || 'Knowledge Transition · Telbiz';
   const values = [
-    ['meta[name="description"]', meta.description],
-    ['meta[property="og:title"]', meta.ogTitle],
-    ['meta[property="og:description"]', meta.ogDescription],
-    ['meta[name="twitter:title"]', meta.ogTitle],
-    ['meta[name="twitter:description"]', meta.ogDescription]
+    ['meta[name="description"]', description],
+    ['meta[property="og:title"]', ogTitle],
+    ['meta[property="og:description"]', ogDescription],
+    ['meta[name="twitter:title"]', ogTitle],
+    ['meta[name="twitter:description"]', ogDescription]
   ];
   values.forEach(([selector, content]) => {
     if (content) document.querySelector(selector)?.setAttribute('content', content);

@@ -13,7 +13,9 @@ The private programme documents remain outside this directory under the local `d
 The deployment build uses a strict allowlist. Only these files can enter the GitHub Pages artifact:
 
 - `index.html`
+- `pitch.html`
 - `styles.css`
+- `pitch.css`
 - `locales.js`
 - `script.js`
 - `404.html`

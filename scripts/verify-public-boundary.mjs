@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const forbiddenNames = new Set(['docs', 'papers', 'source', 'evidence', 'private', 'attachments', 'node_modules']);
-const allowedTopLevel = new Set(['.github', '.gitignore', '.nojekyll', '404.html', 'README.md', 'fonts', 'index.html', 'locales.js', 'og.png', 'package.json', 'robots.txt', 'script.js', 'scripts', 'styles.css']);
+const allowedTopLevel = new Set(['.github', '.gitignore', '.nojekyll', '404.html', 'README.md', 'fonts', 'index.html', 'locales.js', 'og.png', 'package.json', 'pitch.css', 'pitch.html', 'robots.txt', 'script.js', 'scripts', 'styles.css']);
 const textExtensions = new Set(['.html', '.css', '.js', '.json', '.md', '.txt', '.yml', '.yaml']);
 const errors = [];
 
@@ -34,7 +34,7 @@ function walk(dir) {
 }
 
 walk(root);
-for (const required of ['index.html', 'styles.css', 'locales.js', 'script.js', '404.html', 'robots.txt', '.nojekyll']) {
+for (const required of ['index.html', 'pitch.html', 'styles.css', 'pitch.css', 'locales.js', 'script.js', '404.html', 'robots.txt', '.nojekyll']) {
   if (!fs.existsSync(path.join(root, required))) errors.push(`Missing required public file: ${required}`);
 }
 for (const font of ['fonts/noto-sans-lao-lao.woff2', 'fonts/noto-sans-lao-latin.woff2']) {
