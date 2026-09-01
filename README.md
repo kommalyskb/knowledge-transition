@@ -2,6 +2,10 @@
 
 This directory is intentionally designed to become a **separate public GitHub repository**. It contains only the public marketing and investor narrative for Knowledge Transition by Telbiz Co., LTD.
 
+The live narrative supports English, Lao and Thai. The language switcher stores
+the visitor's preference locally and keeps Lao/Thai selections shareable through
+the `?lang=lo` and `?lang=th` URLs.
+
 ## Privacy boundary
 
 The private programme documents remain outside this directory under the local `docs/` tree. Never copy papers, evidence receipts, source data, prototype files or the private Document Directory into this repository.
@@ -10,6 +14,7 @@ The deployment build uses a strict allowlist. Only these files can enter the Git
 
 - `index.html`
 - `styles.css`
+- `locales.js`
 - `script.js`
 - `404.html`
 - `robots.txt`

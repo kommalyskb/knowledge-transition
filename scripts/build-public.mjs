@@ -10,7 +10,7 @@ if (verify.status !== 0) process.exit(verify.status || 1);
 
 fs.rmSync(dist, { recursive: true, force: true });
 fs.mkdirSync(dist, { recursive: true });
-const publishAllowlist = ['index.html', 'styles.css', 'script.js', '404.html', 'robots.txt', '.nojekyll', 'og.png'];
+const publishAllowlist = ['index.html', 'styles.css', 'locales.js', 'script.js', '404.html', 'robots.txt', '.nojekyll', 'og.png'];
 for (const file of publishAllowlist) {
   const source = path.join(root, file);
   if (!fs.existsSync(source)) {
