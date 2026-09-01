@@ -2,6 +2,7 @@ const supportedLocales = ['en', 'lo', 'th'];
 const i18n = window.KT_I18N || { lo: {}, th: {}, meta: {} };
 const originalText = new WeakMap();
 const originalAria = new WeakMap();
+const originalAlt = new WeakMap();
 
 const textWalker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
   acceptNode(node) {
@@ -18,6 +19,8 @@ while (textWalker.nextNode()) {
 
 const ariaElements = [...document.querySelectorAll('[aria-label]')];
 ariaElements.forEach((element) => originalAria.set(element, element.getAttribute('aria-label')));
+const altElements = [...document.querySelectorAll('[alt]')];
+altElements.forEach((element) => originalAlt.set(element, element.getAttribute('alt')));
 
 function initialLocale() {
   const queryLocale = new URLSearchParams(window.location.search).get('lang');
@@ -72,6 +75,10 @@ function applyLocale(locale, persist = true) {
     } else {
       element.setAttribute('aria-label', dictionary[key] || key);
     }
+  });
+  altElements.forEach((element) => {
+    const key = originalAlt.get(element);
+    element.setAttribute('alt', dictionary[key] || key);
   });
 
   document.documentElement.lang = locale;
@@ -144,3 +151,50 @@ copyButton?.addEventListener('click', async () => {
     copyStatus.textContent = intro;
   }
 });
+
+const uiGallery = document.querySelector('[data-ui-gallery]');
+if (uiGallery) {
+  const tabs = [...uiGallery.querySelectorAll('[data-ui-target]')];
+  const panels = [...uiGallery.querySelectorAll('[role="tabpanel"]')];
+  const lightbox = document.getElementById('ui-lightbox');
+  const lightboxImage = lightbox?.querySelector('img');
+  const lightboxTitle = document.getElementById('ui-lightbox-title');
+
+  function activateUiPanel(tab, moveFocus = false) {
+    tabs.forEach((item) => {
+      item.setAttribute('aria-selected', String(item === tab));
+      item.tabIndex = item === tab ? 0 : -1;
+    });
+    panels.forEach((panel) => { panel.hidden = panel.id !== tab.dataset.uiTarget; });
+    if (moveFocus) tab.focus();
+  }
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => activateUiPanel(tab));
+    tab.addEventListener('keydown', (event) => {
+      if (!['ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      let next = index;
+      if (['ArrowDown', 'ArrowRight'].includes(event.key)) next = (index + 1) % tabs.length;
+      if (['ArrowUp', 'ArrowLeft'].includes(event.key)) next = (index - 1 + tabs.length) % tabs.length;
+      if (event.key === 'Home') next = 0;
+      if (event.key === 'End') next = tabs.length - 1;
+      activateUiPanel(tabs[next], true);
+    });
+  });
+
+  panels.forEach((panel) => {
+    panel.querySelectorAll('[data-ui-zoom]').forEach((button) => button.addEventListener('click', () => {
+      const image = panel.querySelector('img');
+      const title = panel.querySelector('h3');
+      if (!lightbox || !lightboxImage || !image) return;
+      lightboxImage.src = image.src;
+      lightboxImage.alt = image.alt;
+      if (lightboxTitle && title) lightboxTitle.textContent = title.textContent;
+      lightbox.showModal();
+    }));
+  });
+
+  lightbox?.querySelector('[data-ui-close]')?.addEventListener('click', () => lightbox.close());
+  lightbox?.addEventListener('click', (event) => { if (event.target === lightbox) lightbox.close(); });
+}

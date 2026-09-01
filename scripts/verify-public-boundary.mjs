@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const forbiddenNames = new Set(['docs', 'papers', 'source', 'evidence', 'private', 'attachments', 'node_modules']);
-const allowedTopLevel = new Set(['.github', '.gitignore', '.nojekyll', '404.html', 'README.md', 'fonts', 'index.html', 'locales.js', 'og.png', 'package.json', 'pitch.css', 'pitch.html', 'robots.txt', 'script.js', 'scripts', 'styles.css']);
+const allowedTopLevel = new Set(['.github', '.gitignore', '.nojekyll', '404.html', 'README.md', 'fonts', 'index.html', 'locales.js', 'og.png', 'package.json', 'pitch.css', 'pitch.html', 'product-ui', 'robots.txt', 'script.js', 'scripts', 'styles.css']);
 const textExtensions = new Set(['.html', '.css', '.js', '.json', '.md', '.txt', '.yml', '.yaml']);
 const errors = [];
 
@@ -39,6 +39,9 @@ for (const required of ['index.html', 'pitch.html', 'styles.css', 'pitch.css', '
 }
 for (const font of ['fonts/noto-sans-lao-lao.woff2', 'fonts/noto-sans-lao-latin.woff2']) {
   if (!fs.existsSync(path.join(root, font))) errors.push(`Missing required Lao font asset: ${font}`);
+}
+for (const asset of ['home-work.png', 'knowledge-ingestion.png', 'approval-decision.png', 'grounded-answer.png', 'transition-command.png', 'executive-continuity.png']) {
+  if (!fs.existsSync(path.join(root, 'product-ui', asset))) errors.push(`Missing required public prototype asset: product-ui/${asset}`);
 }
 
 if (errors.length) {
