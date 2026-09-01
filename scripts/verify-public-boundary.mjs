@@ -9,13 +9,13 @@ const textExtensions = new Set(['.html', '.css', '.js', '.json', '.md', '.txt', 
 const errors = [];
 
 for (const entry of fs.readdirSync(root, { withFileTypes: true })) {
-  if (entry.name === 'dist') continue;
+  if (entry.name === 'dist' || entry.name === '.git') continue;
   if (!allowedTopLevel.has(entry.name)) errors.push(`Unexpected top-level entry: ${entry.name}`);
 }
 
 function walk(dir) {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
-    if (entry.name === 'dist') return [];
+    if (entry.name === 'dist' || entry.name === '.git') return [];
     const absolute = path.join(dir, entry.name);
     const relative = path.relative(root, absolute).split(path.sep).join('/');
     if (entry.isDirectory()) {
