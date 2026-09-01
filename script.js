@@ -101,7 +101,10 @@ function applyLocale(locale, persist = true) {
 }
 
 document.querySelectorAll('[data-locale]').forEach((button) => {
-  button.addEventListener('click', () => applyLocale(button.dataset.locale));
+  button.addEventListener('click', () => {
+    applyLocale(button.dataset.locale);
+    closeNav();
+  });
 });
 applyLocale(activeLocale, false);
 
